@@ -1,0 +1,9 @@
+chart:
+  name: arc-test-chart
+  shortDescription: Test chart for ARC certification pipeline validation
+publicPgpKey: null
+users:
+- githubUsername: hardengl
+vendor:
+  label: arc-test-vendor
+  name: ARC Test Vendor
