@@ -1,4 +1,4 @@
-name: CI (ARC-modified for kni-qe-64)
+name: CI (ARC on kni-qe-64)
 
 on:
   # NOTE: There are implementation details in this workflow that require the
@@ -217,7 +217,7 @@ jobs:
 
   chart-verifier:
     name: Run chart-verifier
-    runs-on: helm-cert-bm
+    runs-on: helm-cert-dev
     permissions:
       contents: read
       pull-requests: write
