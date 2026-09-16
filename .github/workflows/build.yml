@@ -1,4 +1,4 @@
-name: CI
+name: CI (ARC-modified for kni-qe-64)
 
 on:
   # NOTE: There are implementation details in this workflow that require the
@@ -27,7 +27,7 @@ env:
   # workflow to run E2E tests.
   #
   # If unset, the default (relative to openshift-helm-charts) is used.
-  SANDBOX_REPO: ${{ vars.SANDBOX_REPO || 'openshift-helm-charts/sandbox-2025-11' }}
+  SANDBOX_REPO: ${{ vars.SANDBOX_REPO || 'hardengl/openshift-helm-charts-dev' }}
 
 concurrency:
   group: cert-ci-${{ github.event.pull_request.number }}
@@ -217,7 +217,7 @@ jobs:
 
   chart-verifier:
     name: Run chart-verifier
-    runs-on: ubuntu-24.04
+    runs-on: helm-cert-bm
     permissions:
       contents: read
       pull-requests: write
@@ -344,20 +344,30 @@ jobs:
           error_message="The chart verifier returned an error when trying to obtain a verification report for the chart."
           echo "verifier_error_message=$error_message" >> $GITHUB_OUTPUT
 
+      - name: Install yq binary (ARC compatibility - replaces Docker container action)
+        if: ${{ needs.setup.outputs.run_build == 'true' && steps.verify_requires.outputs.report_provided == 'true' }}
+        run: |
+          if ! command -v yq &>/dev/null; then
+            mkdir -p $HOME/bin
+            curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o $HOME/bin/yq
+            chmod +x $HOME/bin/yq
+            echo "$HOME/bin" >> $GITHUB_PATH
+          fi
+
       - name: Get profile version set in report provided by the user
         id: get-profile-version
         if: ${{ needs.setup.outputs.run_build == 'true' && steps.verify_requires.outputs.report_provided == 'true' }}
-        uses: mikefarah/yq@751d8ad57b84f1794661bc70c0afb92a22ad7b3c
-        with:
-          cmd: yq '.metadata.tool.profile.version' ${{ format('./pr-branch/{0}', steps.verify_requires.outputs.provided_report_relative_path) }}
+        run: |
+          RESULT=$(yq '.metadata.tool.profile.version' ${{ format('./pr-branch/{0}', steps.verify_requires.outputs.provided_report_relative_path) }})
+          echo "result=$RESULT" >> $GITHUB_OUTPUT
 
       - name: Get the range of Kubernetes versions set in the report provided by the user
         id: get-kube-range
         if: ${{ needs.setup.outputs.run_build == 'true' && steps.verify_requires.outputs.report_provided == 'true' }}
         continue-on-error: true
-        uses: mikefarah/yq@751d8ad57b84f1794661bc70c0afb92a22ad7b3c
-        with:
-          cmd: yq '.metadata.chart.kubeversion' ${{ format('./pr-branch/{0}', steps.verify_requires.outputs.provided_report_relative_path) }}
+        run: |
+          RESULT=$(yq '.metadata.chart.kubeversion' ${{ format('./pr-branch/{0}', steps.verify_requires.outputs.provided_report_relative_path) }})
+          echo "result=$RESULT" >> $GITHUB_OUTPUT
 
       - name: Get the corresponding range of OCP versions
         id: get-ocp-range
