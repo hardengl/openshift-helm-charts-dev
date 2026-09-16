@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "arc-test-chart.fullname" . }}-config
+  labels:
+    {{- include "arc-test-chart.labels" . | nindent 4 }}
+data:
+  test: "true"
+  version: {{ .Chart.Version | quote }}
