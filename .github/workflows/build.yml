@@ -292,9 +292,17 @@ jobs:
         id: install-oc
         if: ${{ steps.verify_requires.outputs.cluster_needed == 'true' }}
         run: |
-          wget --quiet https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
-          tar -zxvf openshift-client-linux.tar.gz --directory /usr/local/bin/ oc
-          rm -f openshift-client-linux.tar.gz
+          # ARC runner compatibility: use curl instead of wget, handle non-root /usr/local/bin
+          if command -v oc &>/dev/null; then
+            echo "oc already installed"
+          else
+            curl -sL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz -o /tmp/oc.tar.gz
+            mkdir -p $HOME/bin
+            tar -zxf /tmp/oc.tar.gz -C $HOME/bin oc
+            chmod +x $HOME/bin/oc
+            echo "$HOME/bin" >> $GITHUB_PATH
+            rm -f /tmp/oc.tar.gz
+          fi
           oc version --client
 
       - name: Set cluster login params
