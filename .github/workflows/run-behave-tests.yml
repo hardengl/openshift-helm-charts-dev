@@ -1,0 +1,26 @@
+name: Run Behave Tests (ARC E2E Validation)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "Behave tags to run"
+        required: true
+        type: choice
+        options: ["full", "smoke", "owners,redhat"]
+        default: "smoke"
+
+jobs:
+  run-behave:
+    name: Run Behave E2E
+    permissions:
+      contents: read
+    uses: ./.github/workflows/behave.yml
+    with:
+      tags: ${{ inputs.tags }}
+      behave-logging-level: INFO
+      pr-body: "ARC E2E validation run triggered manually."
+      checkout-fetch-depth: 0
+    secrets:
+      bot-name: ${{ secrets.BOT_NAME }}
+      bot-token: ${{ secrets.BOT_TOKEN }}
