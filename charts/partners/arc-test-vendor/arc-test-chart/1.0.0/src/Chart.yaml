@@ -1,0 +1,10 @@
+apiVersion: v2
+name: arc-test-chart
+version: 1.0.0
+description: A test Helm chart for validating the ARC certification pipeline
+type: application
+kubeVersion: ">=1.25.0"
+home: https://github.com/hardengl/openshift-helm-charts-dev
+maintainers:
+  - name: Gary Harden
+    email: gharden@redhat.com
