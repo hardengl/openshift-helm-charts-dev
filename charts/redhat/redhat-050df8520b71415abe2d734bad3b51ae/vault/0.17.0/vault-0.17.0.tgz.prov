@@ -1,0 +1,48 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+annotations:
+  charts.openshift.io/name: vault
+apiVersion: v2
+appVersion: 1.8.4
+description: Official HashiCorp Vault Chart
+home: https://www.vaultproject.io
+icon: https://github.com/hashicorp/vault/raw/f22d202cde2018f9455dec755118a9b84586e082/Vault_PrimaryLogo_Black.png
+keywords:
+- - vault
+- - security
+- - encryption
+- - secrets
+- - management
+- - automation
+- - infrastructure
+kubeVersion: '>= 1.14.0-0'
+name: vault
+sources:
+- - https://github.com/hashicorp/vault
+- - https://github.com/hashicorp/vault-helm
+- - https://github.com/hashicorp/vault-k8s
+- - https://github.com/hashicorp/vault-csi-provider
+version: 0.17.0
+
+...
+files:
+  vault-0.17.0.tgz: sha256:6fb1fea44b19334adff0b9c8bb2946d35f59150fea2ba98fb2d2fc902162ecb5
+
+-----BEGIN PGP SIGNATURE-----
+
+wsG5BAEBCgBtBYJqVp7TCRB+MS8AkakPE0UUAAAAAAAcACBzYWx0QG5vdGF0aW9u
+cy5vcGVucGdwanMub3JnyV4Z6xXQJbBhNeViZh3c6R92rXgC7ENaG2TZzwWsVDgW
+IQQ0VgbU8Q7iTWRC1XN+MS8AkakPEwAAtNcP/2rqh5WidBDBvQMfn11Mc44aS3y0
+nrE6VtozaE6K2brVY2UAcWIthQBg8ooOLgKiDDe6vQjslF1dAbn0PlDXcaM2Q5Nq
+tyD72kq8Sx+XRZELltc9jbcKtCGs2B59z+tlIjyxGSR1DUsKC9fG3ZwhPgan00zo
+YzD4DyAaWkfDNZUmxQY9w55+NWbhrkdnJvVlOPYdbdz14mhKonx8DuUDNX4m5FV1
++BCRn1rFoZ/MNx0EYDy0v0DgQeuE9VqCkjnJSAXPQIS8c6E72RyfhbMQWoegQZ+a
+va1iBT2YZOOrWb/GTncFPxKNi25jJL4FJa8gzFnv8g4G9hsPex40JKv0JoKIYWF2
+co/kQdLfZYn+darMTS1dLufnItlklifpl7aWiECzqwrPDosCP7V2rQOzeSkuIpaS
+g53G/Sn2KgHwg5A18aOR5+6O+6p3ouG1QdBXVgjrxtWSwQnQJTlBIySinrh+MD0A
+7cg2Vi6n43YkKvEV41WIvah6NAewiH7t46R8eAaBtl32nC1EhbEmdwVDbhIlVFe7
+6+D8QTWeRKjq9AoJes8SHuPnwIgpy1Jh07KBkzgi+U6fOKgB7vO6fDVY6Nue3ov1
+tfgaNtGQwRfp6oKuR1AVxaQbyvC5omfg6UryBMw9tmV76Q8BwWTMGqcNSbTCT4uE
+w4wqP0hf4O0pi2Wm
+-----END PGP SIGNATURE-----
