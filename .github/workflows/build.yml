@@ -357,7 +357,9 @@ jobs:
         run: |
           if ! command -v yq &>/dev/null; then
             mkdir -p $HOME/bin
-            curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o $HOME/bin/yq
+            # Pinned to an exact release (not "latest") per org convention of avoiding mutable
+            # references — see how chart-verifier itself is pinned via needs.setup.outputs.verifier-action-image above
+            curl -sL https://github.com/mikefarah/yq/releases/download/v4.53.6/yq_linux_amd64 -o $HOME/bin/yq
             chmod +x $HOME/bin/yq
             echo "$HOME/bin" >> $GITHUB_PATH
           fi
